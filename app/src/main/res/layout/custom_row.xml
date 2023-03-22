@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view = "http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_view_friend"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="false"
+    card_view:cardUseCompatPadding="true">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/date"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingTop="20dp"
+            android:text="@string/date"
+            android:layout_marginStart="16dp" />
+        <TextView
+            android:id="@+id/name"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/date"
+            android:paddingTop="20dp"
+            android:text="@string/name"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/date"/>
+        <TextView
+            android:id="@+id/country"
+            style="@style/TextAppearance.AppCompat.Medium"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="16dp"
+            android:layout_toRightOf="@+id/name"
+            android:paddingTop="20dp"
+            android:text="@string/country"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@+id/name"/>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
+
+
