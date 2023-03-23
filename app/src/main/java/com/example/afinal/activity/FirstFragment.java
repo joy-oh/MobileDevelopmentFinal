@@ -55,13 +55,8 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
     private List<Next7daysHolidays> nextholidaysData;
     int progress = 0;
 
-    public FirstFragment() {
-        super(R.layout.fragment_first);
-    }
-
-//    public void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
+    public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);}
 
     @Override
     public View onCreateView(
@@ -73,8 +68,9 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
     }
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
-//    navController = Navigation.findNavController(view);
+        navController = Navigation.findNavController(view);
         Button btn = binding.searchButton;
+
         binding.nextHolidays.setOnClickListener(this::onRadioButtonClicked);
         binding.holidayCountryYear.setOnClickListener(this::onRadioButtonClicked);
         binding.longWeekend.setOnClickListener(this::onRadioButtonClicked);
@@ -292,23 +288,37 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
 
     @Override
     public void onItemClick(int position) {
-        String search ="";
-        Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
+        Bundle bundle = new Bundle();
         switch(queryString){
             case "nextHolidays":
                 Next7daysHolidays data1 = nextholidaysData.get(position);
-                search = data1.getName();
+                bundle.putString("title", "Next Holiday");
+                bundle.putString("date",data1.getDate());
+                bundle.putString("name",data1.getName() );
+                bundle.putString("localname", data1.getName());
+                bundle.putString("country", data1.getCountry());
+                navController.navigate(R.id.action_FirstFragment_to_SecondFragment,bundle);
                 break;
             case "holidayCountryYear":
                 PublicHolidays data2 = publicholidaysData.get(position);
-                search = data2.getName();
+                bundle.putString("title", "Public Holiday");
+                bundle.putString("date", data2.getDate());
+                bundle.putString("name", data2.getName());
+                bundle.putString("localname", data2.getLocalName());
+                bundle.putString("country", binding.countryCode.getText().toString().toUpperCase());
+                navController.navigate(R.id.action_FirstFragment_to_SecondFragment,bundle);
                 break;
             case "longWeekend":
                 LongWeekends data3 = lngwkndData.get(position);
-                search = "holiday in " + binding.longWeekendCountryCode.getText().toString().toUpperCase() + " on "+ data3.getStart() + " " + data3.getEnd();
+                bundle.putString("title", "Long Weekend");
+                bundle.putString("days", data3.getDays());
+                bundle.putString("start", data3.getStart());
+                bundle.putString("end", data3.getEnd());
+                bundle.putString("country", binding.longWeekendCountryCode.getText().toString().toUpperCase());
+                navController.navigate(R.id.action_FirstFragment_to_ThirdFragment,bundle);
+
                 break;
         }
-        intent.putExtra(SearchManager.QUERY,search);
-        startActivity(intent);
+
     }
 }
