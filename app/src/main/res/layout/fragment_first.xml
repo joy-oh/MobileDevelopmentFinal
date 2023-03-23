@@ -29,7 +29,7 @@
         android:layout_centerHorizontal="true"
         android:max="100"
         android:progress="50"
-        android:background="#7C7C7C"
+        android:background="#FFFFFF"
         android:padding="10dp"
         android:indeterminate="true"
         android:visibility="invisible"
