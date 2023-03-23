@@ -1,13 +1,9 @@
 package com.example.afinal.activity;
-
-import android.app.SearchManager;
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
@@ -86,7 +82,6 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
             }
             progressBar = binding.progressBar;
             progressBar.setVisibility(View.VISIBLE);
-//            setProgressValue(progress);
             callEnqueue(v);}
         );
     }

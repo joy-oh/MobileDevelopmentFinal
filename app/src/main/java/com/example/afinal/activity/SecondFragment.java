@@ -13,9 +13,6 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-
-import com.example.afinal.R;
-import com.example.afinal.databinding.FragmentFirstBinding;
 import com.example.afinal.databinding.FragmentSecondBinding;
 
 import org.jetbrains.annotations.NotNull;

@@ -15,8 +15,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
-import com.example.afinal.R;
-import com.example.afinal.databinding.FragmentSecondBinding;
 import com.example.afinal.databinding.FragmentThirdBinding;
 
 import org.jetbrains.annotations.NotNull;
