@@ -74,7 +74,10 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
         binding.nextHolidays.setOnClickListener(this::onRadioButtonClicked);
         binding.holidayCountryYear.setOnClickListener(this::onRadioButtonClicked);
         binding.longWeekend.setOnClickListener(this::onRadioButtonClicked);
-
+        binding.countryCode.setOnClickListener(v->showSearch());
+        binding.longWeekendCountryCode.setOnClickListener(v->showSearch());
+        binding.longWeekendYear.setOnClickListener(v->showSearch());
+        binding.year.setOnClickListener(v->showSearch());
         service = RetrofitClientInstance.getRetrofitInstance().create(GetDataService.class);
 
         btn.setOnClickListener(v-> {
@@ -83,10 +86,20 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
             }
             progressBar = binding.progressBar;
             progressBar.setVisibility(View.VISIBLE);
-            setProgressValue(progress);
+//            setProgressValue(progress);
             callEnqueue(v);}
         );
     }
+
+    private void showSearch() {
+        if(recyclerView.getVisibility()==View.VISIBLE){
+            recyclerView.setVisibility(View.INVISIBLE);
+        }
+        if(binding.searchButton.getVisibility()==View.INVISIBLE){
+            binding.searchButton.setVisibility(View.VISIBLE);
+        }
+    }
+
     private void setProgressValue(int progress) {
         progressBar.setProgress(progress);
         Thread thread = new Thread(() -> {
@@ -118,6 +131,7 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
                         public void onResponse(Call<List<Next7daysHolidays>> call, Response<List<Next7daysHolidays>> response) {
                             nextholidaysData = response.body();
                             generateNext7daysList(nextholidaysData);
+                            binding.searchButton.setVisibility(View.INVISIBLE);
                             recyclerView.setVisibility(View.VISIBLE);
                             progressBar.setVisibility(ProgressBar.INVISIBLE);
                         }
@@ -150,6 +164,7 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
                             publicholidaysData = response.body();
                             if (publicholidaysData != null) {
                                 generateHolidaysYearCountryList(publicholidaysData);
+                                binding.searchButton.setVisibility(View.INVISIBLE);
                                 recyclerView.setVisibility(View.VISIBLE);
                             } else {
                                 if (recyclerView != null && recyclerView.getVisibility() == View.VISIBLE) {
@@ -188,6 +203,7 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
                             lngwkndData = response.body();
                             if (lngwkndData != null) {
                                 generateLongWeekendYearCountryList(lngwkndData);
+                                binding.searchButton.setVisibility(View.INVISIBLE);
                                 recyclerView.setVisibility(View.VISIBLE);
                             } else {
                                 if (recyclerView != null && recyclerView.getVisibility() == View.VISIBLE) {
@@ -223,6 +239,9 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
                     if(recyclerView!=null && recyclerView.getVisibility()==View.VISIBLE){
                         recyclerView.setVisibility(View.INVISIBLE);
                     }
+                    if(binding.searchButton.getVisibility() == View.INVISIBLE){
+                        binding.searchButton.setVisibility(View.VISIBLE);
+                    }
                 }
                 break;
             case R.id.holidayCountryYear:
@@ -234,6 +253,9 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
                     if(recyclerView!=null && recyclerView.getVisibility()==View.VISIBLE){
                         recyclerView.setVisibility(View.INVISIBLE);
                     }
+                    if(binding.searchButton.getVisibility() == View.INVISIBLE){
+                        binding.searchButton.setVisibility(View.VISIBLE);
+                    }
                 }
                 break;
             case R.id.longWeekend:
@@ -244,6 +266,9 @@ public class FirstFragment extends Fragment implements RecyclerViewInterface
                     }
                     if(recyclerView!=null && recyclerView.getVisibility()==View.VISIBLE){
                         recyclerView.setVisibility(View.INVISIBLE);
+                    }
+                    if(binding.searchButton.getVisibility() == View.INVISIBLE){
+                        binding.searchButton.setVisibility(View.VISIBLE);
                     }
                 }
                 break;

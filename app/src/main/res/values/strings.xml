@@ -19,7 +19,7 @@
     <string name="local_name">local name</string>
     <string name="holiday_name">name</string>
     <string name="holiday_date">date</string>
-    <string name="error">Invalid Entry</string>
+    <string name="error">Enter valid values on both fields</string>
     <string name="error_not_entered">Must Enter Country Code and Year</string>
     <string name="exit">exit</string>
     <string name="alert_title">Alert</string>

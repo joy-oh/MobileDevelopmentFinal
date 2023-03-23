@@ -3,6 +3,7 @@ package com.example.afinal.activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.CalendarContract;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,9 +20,15 @@ import com.example.afinal.databinding.FragmentSecondBinding;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Calendar;
+
 public class SecondFragment extends Fragment {
     NavController navController;
     private FragmentSecondBinding binding;
+    private String title;
+    private String name;
+    private String country;
+    private String date;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);}
@@ -37,31 +44,44 @@ public class SecondFragment extends Fragment {
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = Navigation.findNavController(view);
-        String title = getArguments().getString("title");
+        title = getArguments().getString("title");
         binding.title.setText(title);
         String localname = getArguments().getString("localname");
         binding.localname.setText("Local name: " + localname);
-        String name = getArguments().getString("name");
+        name = getArguments().getString("name");
         binding.name.setText("Name: " + name);
-        String date = getArguments().getString("date");
+        date = getArguments().getString("date");
         binding.date.setText("Date: " + date);
-        String country = getArguments().getString("country");
+        country = getArguments().getString("country");
         binding.country.setText("Country code: " + country);
 
-        Button back = binding.backButton;
-        back.setOnClickListener(v->{
-            navController.navigate(R.id.action_SecondFragment_to_FirstFragment);
-        });
         Button calendar = binding.calendarButton;
-        calendar.setOnClickListener(v->{
-
-        });
+        calendar.setOnClickListener(v->addCalendarEvent(v));
         Button searchBtn = binding.searchButton;
         searchBtn.setOnClickListener(v->{
             Intent intent = new Intent(Intent.ACTION_WEB_SEARCH);
             intent.putExtra(SearchManager.QUERY,"What is "+ localname + "?");
             startActivity(intent);
         });
+    }
+
+    private void addCalendarEvent(View v) {
+        Calendar beginTime = Calendar.getInstance();
+        int year = Integer.parseInt(date.substring(0,4));
+        int month = Integer.parseInt(date.substring(5,7)) -1;
+        int day = Integer.parseInt(date.substring(8));
+        beginTime.set(year, month, day, 00, 00);
+        Calendar endTime = Calendar.getInstance();
+        endTime.set(year, month, day+1, 00, 00);
+        Intent intent = new Intent(Intent.ACTION_INSERT)
+                .setData(CalendarContract.Events.CONTENT_URI)
+                .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, beginTime.getTimeInMillis())
+//                .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, endTime.getTimeInMillis())
+                .putExtra(CalendarContract.EXTRA_EVENT_ALL_DAY, true)
+                .putExtra(CalendarContract.Events.TITLE, name)
+                .putExtra(CalendarContract.Events.EVENT_LOCATION, country)
+                .putExtra(CalendarContract.Events.AVAILABILITY, CalendarContract.Events.AVAILABILITY_BUSY);
+        startActivity(intent);
     }
 
     @Override
